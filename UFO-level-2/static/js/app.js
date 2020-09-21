@@ -41,7 +41,7 @@ function handleClick() {
         let fieldValue = d3.select("#" + idName).property("value");
 
         if (fieldValue !== "") {
-            var filteredData = tableData.filter(sightingDate => sightingDate[idName] === fieldValue.trim());
+            var filteredData = tableData.filter(sightingDate => sightingDate[idName].toLowerCase() === fieldValue.toLowerCase().trim());
         }
     }
     
