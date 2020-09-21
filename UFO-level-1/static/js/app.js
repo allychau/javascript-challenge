@@ -6,12 +6,10 @@ var tableData = data;
 // Build the table when the page loads
 displayTable(tableData);
 
-var form  = d3.select("form");
 var button = d3.select("#filter-btn");
 
 // Create event handlers
 button.on("click",handleClick);
-form.on("submit",handleClick);
 
 function displayTable(tableData) {
     // Get a reference to the table body
