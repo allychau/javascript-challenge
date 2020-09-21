@@ -2,15 +2,16 @@
 var tableData = data;
 
 // Initial UFO Dataset
-console.log(tableData);
+//console.log(tableData);
+// Build the table when the page loads
 displayTable(tableData);
 
 var form  = d3.select("form");
 var button = d3.select("#filter-btn");
 
 // Create event handlers
-button.on("click",runEnter);
-form.on("submit",runEnter);
+button.on("click",handleClick);
+form.on("submit",handleClick);
 
 function displayTable(tableData) {
     // Get a reference to the table body
@@ -29,28 +30,28 @@ function displayTable(tableData) {
     });  
 }
 
-function runEnter() {
+function handleClick() {
     // Prevent the page from refreshing
     d3.event.preventDefault();
-
+    // Clear the table for filtered table
+    deleteTbody();
     // Select the input element and get the raw HTML node, then the value property of the iput element
     var inputValue = d3.select("#datetime").property("value");
-    console.log("inputValue: " + inputValue);
-    //console.log(tableData);
-
+    //Check if a date was entered.  If empty, display the original data table as the filtered data
     if (inputValue.trim() === "") {
         filteredData = tableData;
     }
     else {
+        // Apply filter to the data table.  Keep only the rows where the 'datetime' value matches
+        // the filter value.
         var filteredData = tableData.filter(sightingDate => sightingDate.datetime === inputValue.trim());
     }
     //Check if the given ufo sighting date exist
     if (filteredData.length == 0) {
-        console.log("I am here");
-        d3.select("tbody").append("tr").append("td").text("No Date Found");
+        d3.select("tbody").append("tr").append("td").attr("colspan", 7)
+        .text("No Records Found");
     }
-    // Clear the table for filtered table
-    deleteTbody();
+    //Rebuild table using the filtered data
     displayTable(filteredData);  
 
 }
@@ -58,5 +59,4 @@ function runEnter() {
 // Clear the table for new filtered data
 function deleteTbody() {
     d3.select("tbody").selectAll("tr").remove().selectAll("td").remove();
-    //console.log("hello");
 }
