@@ -7,9 +7,12 @@ var tableData = data;
 displayTable(tableData);
 
 var button = d3.select("#filter-btn");
+// Select the form
+var form = d3.select("#form");
 
-// Create event handlers
+// Create event handlers for clicking the button or pressing the enter key
 button.on("click",handleClick);
+form.on("submit",handleClick);
 
 function displayTable(tableData) {
     // Get a reference to the table body
